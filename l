@@ -37,4 +37,4 @@ echo "current directory: $(pwd)"
 
 echo
 
-ls -altr
+ls -la
