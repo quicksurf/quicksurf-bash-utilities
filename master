@@ -29,7 +29,10 @@
 #
 #Feel free to modify to meet your needs.
 
-wip
+if [ "$(git symbolic-ref --short -q HEAD)" != "master" ]; then
 
-git checkout master
+  wip
 
+  git checkout master
+
+fi
