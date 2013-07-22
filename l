@@ -37,4 +37,12 @@ echo "current directory: $(pwd)"
 
 echo
 
-ls -la
+if [ -n "$1" ]; then
+  
+  grep -lr "$1" .
+
+else
+  
+  ls -la
+
+fi
