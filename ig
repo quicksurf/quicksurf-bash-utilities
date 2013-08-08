@@ -30,7 +30,7 @@
 #
 #Feel free to modify to meet your needs.
 
-if [ $(git rev-parse --is-inside-work-tree) == "true" ]
+if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]
     then
         exit 0
 fi
