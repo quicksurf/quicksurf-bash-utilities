@@ -36,13 +36,8 @@ if [[ "$?" -ne 0 ]]
         exit 1
 fi
 
-#check to make sure we've passed in which branch we want to perform a clean
-#commit of
-if [ $# -eq 0 ]
-    then
-    echo "Please supply a branch name"
-    exit 1
-fi
+branch_name="$(pb_name $1)"
+clean_branch="clean"
 
 #now, lets pull down and make sure master is up to date
 master
@@ -50,23 +45,23 @@ pull
 
 #now make sure the private branch has all of masters code, then switch to a
 #clean branch
-pb "$1"
-pb "clean"
+pb "$branch_name"
+pb "$clean_branch"
 
 #now the magic: do a squashed merge from the private branch and reset, then
 #commit
-git merge --squash "$1"
+git merge --squash "$branch_name"
 git reset
 commit
 
 #now that we've committed with our commit message, merge clean into master and
 #dispose of clean
 master
-git merge clean
-git branch -d clean
+git merge "$clean_branch"
+git branch -d "$clean_branch"
 
 #make sure our private branch is also up to date
-pb "$1"
+pb "$branch_name"
 
 #push master
 push
