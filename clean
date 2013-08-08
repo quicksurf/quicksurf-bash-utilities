@@ -1,0 +1,71 @@
+#!/bin/bash
+
+
+#The MIT License (MIT)
+#
+#Copyright (c) 2013 Adrian Bacon (adrian_bacon@quicksurf.com)
+#
+#Permission is hereby granted, free of charge, to any person obtaining a copy of
+#this software and associated documentation files (the "Software"), to deal in
+#the Software without restriction, including without limitation the rights to
+#use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+#the Software, and to permit persons to whom the Software is furnished to do so,
+#subject to the following conditions:
+#
+#The above copyright notice and this permission notice shall be included in all
+#copies or substantial portions of the Software.
+#
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+#FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+#COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+#IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+#CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+#SCRIPT_CATEGORY:GIT
+#
+#This script will quickly perform a clean commit to master of a private branch
+#
+#Feel free to modify to meet your needs.
+
+#Check to see if we are in a git repo, and if so, proceed, otherwise, exit with
+#a failure.
+if [[ $(ig) -ne 0 ]]
+    then
+        exit 1
+fi
+
+#check to make sure we've passed in which branch we want to perform a clean
+#commit of
+if [ $# -eq 0 ]
+    then
+    echo "Please supply a branch name"
+    exit 1
+fi
+
+#now, lets pull down and make sure master is up to date
+master
+pull
+
+#now make sure the private branch has all of masters code, then switch to a
+#clean branch
+pb "$1"
+pb "clean"
+
+#now the magic: do a squashed merge from the private branch and reset, then
+#commit
+git merge --squash "$1"
+git reset
+commit
+
+#now that we've committed with our commit message, merge clean into master and
+#dispose of clean
+master
+git merge clean
+git branch -d clean
+
+#make sure our private branch is also up to date
+pb "$1"
+
+#push master
+push
