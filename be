@@ -42,9 +42,4 @@ if [ $# -eq 0 ]
         exit 1
 fi
 
-if [[ $(git show-ref --verify --quiet refs/heads/"$1") -ne 0 ]]
-    then
-        exit 1
-fi
-
-exit 0
+git show-ref --verify --quiet refs/heads/"$1"

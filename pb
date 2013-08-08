@@ -63,7 +63,8 @@ if [ "$branch_name" == "master" ]
 fi
 
 #now that we have our name, lets check it out
-if [[ $(be "$branch_name") -gt 0 ]]
+be "$branch_name"
+if [[ $? -eq 0 ]]
     then
         git checkout -b "$branch_name"
     else
