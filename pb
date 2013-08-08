@@ -64,7 +64,7 @@ fi
 
 #now that we have our name, lets check it out
 be "$branch_name"
-if [[ $? -eq 0 ]]
+if [[ $? -gt 0 ]]
     then
         git checkout -b "$branch_name"
     else
