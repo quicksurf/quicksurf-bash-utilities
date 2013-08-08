@@ -24,11 +24,8 @@
 #
 #SCRIPT_CATEGORY:GIT
 #
-#This script will quickly check out a private/topic branch from master and if
-#necessary, do a quick merge from master into it. You can can pass in a branch
-#name on the command line, or let it use a name defined in your $PRIVATE_BRANCH
-#environment variable if you have that set, OR, if none of that, the private
-#branch will be your username.
+#This script checks to see if a branch exists and returns a successful status
+#code if it does, otherwise a non-successful status code if it doesn't.
 #
 #Feel free to modify to meet your needs.
 
@@ -39,36 +36,15 @@ if [[ $(ig) -ne 0 ]]
         exit 1
 fi
 
-#first things first, make sure we're on master
-master
-
-#now, lets figure out what what our private branch is going to be named
-#start off by naming it the default user name
-branch_name="$(id -u -n)"
-
-#now lets check to see if the name was passed on the command line
-if [ $# -gt 0 ]
+#check to see if a branch name was passed in
+if [ $# -eq 0 ]
     then
-        branch_name="$1"
-elif [ -n "$PRIVATE_BRANCH" ]
-    then
-        branch_name="$PRIVATE_BRANCH"
-fi
-
-#the only real rule here for private branch names, can't be called "master"
-if [ "$branch_name" == "master" ]
-    then
-        echo "The private branch cannot be named master!"
         exit 1
 fi
 
-#now that we have our name, lets check it out
-if [[ $(be "$branch_name") -gt 0 ]]
+if [[ $(git show-ref --verify --quiet refs/heads/"$1") -ne 0 ]]
     then
-        git checkout -b "$branch_name"
-    else
-        git checkout "$branch_name"
+        exit 1
 fi
 
-#now lets merge master into it
-git merge -m "merge master branch" master
+exit 0
