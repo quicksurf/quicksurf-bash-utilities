@@ -43,18 +43,8 @@ fi
 #first things first, make sure we're on master
 master
 
-#now, lets figure out what what our private branch is going to be named
-#start off by naming it the default user name
-branch_name="$(id -u -n)"
-
-#now lets check to see if the name was passed on the command line
-if [ $# -gt 0 ]
-    then
-        branch_name="$1"
-elif [ -n "$PRIVATE_BRANCH" ]
-    then
-        branch_name="$PRIVATE_BRANCH"
-fi
+#get our branch name
+branch_name="$(pb_name $1)"
 
 #the only real rule here for private branch names, can't be called "master"
 if [ "$branch_name" == "master" ]
