@@ -32,6 +32,13 @@
 #
 #Feel free to modify to meet your needs.
 
+#Check to see if we are in a git repo, and if so, proceed, otherwise, exit with
+#a failure.
+if [ $(ig) -ne 0 ]
+    then
+        exit 1
+fi
+
 #first things first, make sure we're on master
 master
 

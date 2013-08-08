@@ -24,22 +24,15 @@
 #
 #SCRIPT_CATEGORY:GIT
 #
-#This script will quickly commit a wip on the current branch and checkout
-#master. This should really only be used on topic/private branches.
+#This script checks to see if the current working directory is in a git worktree
+#and if so, returns success, else returns failure.  This is primarily for other
+#scripts to use.
 #
 #Feel free to modify to meet your needs.
 
-#Check to see if we are in a git repo, and if so, proceed, otherwise, exit with
-#a failure.
-if [ $(ig) -ne 0 ]
+if [ $(git rev-parse --is-inside-work-tree) == "true" ]
     then
-        exit 1
+        exit 0
 fi
 
-if [ "$(git symbolic-ref --short -q HEAD)" != "master" ]; then
-
-  wip
-
-  git checkout master
-
-fi
+exit 1
