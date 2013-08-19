@@ -38,11 +38,16 @@ echo "current directory: $(pwd)"
 echo
 
 if [ -n "$1" ]; then
-  
-  echo "listing files that contain the string: $1"
-  echo
-  
-  grep -lr "$1" .
+
+	if [ "$1" != "-d" ]; then
+		echo "listing files that contain the string: $1"
+		echo
+
+		grep -lr "$1" .
+
+	else
+		ls -la | grep '^d'
+	fi
 
 else
   
