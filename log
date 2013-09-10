@@ -38,4 +38,20 @@ fi
 
 clear
 
-git log --since=4.week --date=iso8601 --pretty=format:"%Cgreen%ad: %Cred%h: %Creset%d %an: %s"
+if [ -n "$1" ]; then
+
+    if [ "$1" == "-d" ]; then
+
+        git log
+
+    else
+
+        echo "\"$1\" is not a recognized argument"
+
+    fi
+
+else
+
+    git log --since=4.week --date=iso8601 --pretty=format:"%Cgreen%ad: %Cred%h: %Creset%d %an: %s"
+
+fi
