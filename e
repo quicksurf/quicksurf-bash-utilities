@@ -36,4 +36,4 @@
 #Feel free to modify to meet your needs.
 
 
-open -a TextWrangler "$1"
+open -a BBEdit "$1"
