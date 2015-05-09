@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 
 #The MIT License (MIT)
 #
-#Copyright (c) 2013 Adrian Bacon (adrian_bacon@quicksurf.com)
+#Copyright (c) 2013-2015 Adrian Bacon (adrian_bacon@quicksurf.com)
 #
 #Permission is hereby granted, free of charge, to any person obtaining a copy of
 #this software and associated documentation files (the "Software"), to deal in
@@ -50,7 +50,7 @@ if [ -n "$1" ]; then
 	fi
 
 else
-  
+
   ls -la
 
 fi
