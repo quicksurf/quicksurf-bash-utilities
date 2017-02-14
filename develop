@@ -24,8 +24,8 @@
 #
 #SCRIPT_CATEGORY:GIT
 #
-#This script will quickly switch to develop using the develop script and do a
-#git pull.
+#This script will quickly commit a wip on the current branch and checkout
+#develop. This should really only be used on topic/private branches.
 #
 #Feel free to modify to meet your needs.
 
@@ -37,7 +37,10 @@ if [[ "$?" -ne 0 ]]
         exit 1
 fi
 
-develop
+if [ "$(git symbolic-ref --short -q HEAD)" != "develop" ]; then
 
-git pull
+  wip
 
+  git checkout develop
+
+fi

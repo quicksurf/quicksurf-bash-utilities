@@ -40,18 +40,25 @@ if [[ "$?" -ne 0 ]]
         exit 1
 fi
 
-#first things first, make sure we're on master
-master
+#first things first, make sure we're on develop
+develop
 
 #get our branch name
 branch_name="$(pb_name $1)"
 
-#the only real rule here for private branch names, can't be called "master"
+#the only real rule here for private branch names, can't be called "master" or "develop"
 if [ "$branch_name" == "master" ]
     then
         echo "The private branch cannot be named master!"
         exit 1
 fi
+
+if [ "$branch_name" == "develop" ]
+    then
+        echo "The private branch cannot be named develop!"
+        exit 1
+fi
+
 
 #now that we have our name, lets check it out
 be "$branch_name"
@@ -62,5 +69,5 @@ if [[ $? -gt 0 ]]
         git checkout "$branch_name"
 fi
 
-#now lets merge master into it
-git merge -m "merge master branch" master
+#now lets merge develop into it
+git merge -m "merge develop branch" develop

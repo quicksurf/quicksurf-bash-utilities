@@ -24,7 +24,7 @@
 #
 #SCRIPT_CATEGORY:GIT
 #
-#This script will quickly switch to master using the master script and do a
+#This script will quickly switch to develop using the develop script and do a
 #git push.
 #
 #Feel free to modify to meet your needs.
@@ -37,7 +37,7 @@ if [[ "$?" -ne 0 ]]
         exit 1
 fi
 
-master
+develop
 
 git push
 
